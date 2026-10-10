@@ -1,4 +1,4 @@
-COMPOSE = docker compose -f compose.yml
+COMPOSE = docker compose --env-file ../.env -f compose.yml
 
 .PHONY: up down reload console
 
