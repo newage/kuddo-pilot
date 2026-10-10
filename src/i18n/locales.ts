@@ -11,7 +11,7 @@ function isLocale(value: unknown): value is Locale {
   return LOCALES.some((l) => l === value);
 }
 
-// Перша підтримувана мова за пріоритетом q (q=0 ігноруємо); інакше мова за замовчуванням.
+// First supported language by q priority (q=0 is ignored); otherwise the default language.
 export function negotiateLocale(acceptLanguage: string | null | undefined): Locale {
   if (!acceptLanguage) return DEFAULT_LOCALE;
   const ranked = acceptLanguage
@@ -27,7 +27,7 @@ export function negotiateLocale(acceptLanguage: string | null | undefined): Loca
   return ranked.find((x) => isLocale(x.base))?.base as Locale | undefined ?? DEFAULT_LOCALE;
 }
 
-// Явний вибір (cookie) сильніший за Accept-Language; невалідна cookie ігнорується.
+// An explicit choice (cookie) beats Accept-Language; an invalid cookie is ignored.
 export function resolveLocale(cookieValue: string | null | undefined, acceptLanguage: string | null | undefined): Locale {
   return isLocale(cookieValue) ? cookieValue : negotiateLocale(acceptLanguage);
 }

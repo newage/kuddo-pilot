@@ -9,7 +9,7 @@ export async function getProfile(db: Db, userId: string) {
   return row ?? { userId, name: "", age: null, hobbies: "", about: "" };
 }
 
-// Один запис на користувача. Самоопис зберігається як є, без фільтрації.
+// One record per user. The self-description is stored as is, unfiltered.
 export async function saveProfile(db: Db, userId: string, input: ProfileInput) {
   await db
     .insert(profiles)

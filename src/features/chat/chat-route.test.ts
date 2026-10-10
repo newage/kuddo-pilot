@@ -186,7 +186,7 @@ describe("POST /api/chat", () => {
     const res = await post({ chatId: chat.id, text: "десяте" });
     await res.text();
 
-    // відповідь уже збережена (11 записів), згортання ще не виконано
+    // the answer is already saved (11 entries), folding has not run yet
     expect(h.afterCallbacks).toHaveLength(1);
     expect(await entries(chat.id)).toHaveLength(11);
 

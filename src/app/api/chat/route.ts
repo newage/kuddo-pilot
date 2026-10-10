@@ -18,7 +18,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const fail = (status: number, error: string) => Response.json({ error }, { status });
 
-// Єдиний маршрут до Gemini: сесія → доступ ролі до вчителя → збереження → стрімінг → збереження відповіді.
+// The single route to Gemini: session → role access to the teacher → save → streaming → save the answer.
 export async function POST(request: Request) {
   const errors = messagesFor(localeFromRequest(request)).errors;
   const session = await auth();
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const [existing] = await db.select().from(chats).where(eq(chats.id, chatId));
   let teacherId: string;
   if (existing) {
-    // чужий або прихований чат не розрізняємо від неіснуючого
+    // someone else's or a hidden chat is indistinguishable from a nonexistent one
     if (existing.userId !== user.id || existing.deletedAt) return fail(404, errors.chatNotFound);
     teacherId = existing.teacherId;
   } else {
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       .insert(chats)
       .values({ id: chatId, userId: user.id, teacherId, title: makeTitle(text) })
       .onConflictDoNothing();
-    // гонка з однаковим chatId: чат мав створитися саме для цього користувача
+    // race on the same chatId: the chat must have been created for this very user
     const [created] = await db.select().from(chats).where(eq(chats.id, chatId));
     if (!created || created.userId !== user.id || created.deletedAt) return fail(404, errors.chatNotFound);
   }
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     locale: parseLocale(body?.locale),
   });
 
-  // Згортання — після завершення відповіді; збій не впливає на відповідь (foldChatIfNeeded не кидає).
+  // Folding runs after the answer completes; a failure does not affect the answer (foldChatIfNeeded does not throw).
   after(() => foldChatIfNeeded(db, chatId));
 
   const stream = createUIMessageStream({
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
           writer.write({ type: "text-delta", id, delta });
         }
       } finally {
-        // обрив стріму: зберігаємо те, що встигли отримати
+        // stream aborted: keep what we managed to receive
         if (answer) await db.insert(chatMessages).values({ chatId, role: "assistant", content: answer });
       }
       if (!answer) throw new Error("Порожня відповідь Gemini");

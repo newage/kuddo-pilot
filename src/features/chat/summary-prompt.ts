@@ -1,4 +1,4 @@
-// Один промпт підсумовування для всіх вчителів: не залежить від предмета й не містить промпту вчителя чи профілю.
+// A single summarization prompt for all teachers: independent of the subject and free of the teacher prompt or profile.
 export const SUMMARY_SYSTEM_PROMPT = [
   "Ти стискаєш історію розмови в короткий підсумок.",
   "Збережи ключові факти, теми, висновки й нерозв'язані питання.",

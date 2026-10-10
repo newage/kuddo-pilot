@@ -18,7 +18,7 @@ export default async function ChatPage({ params }: { params: Promise<{ chatId: s
   const data = await getChatWithEntries(db, user.id, chatId);
   if (!data) notFound();
 
-  // підсумок, якщо є, — першим повідомленням
+  // the summary, if any, goes first
   const initialMessages: UIMessage[] = data.entries.map((e) => ({
     id: e.role === "summary" ? `summary-${e.id}` : e.id,
     role: e.role === "user" ? "user" : "assistant",

@@ -4,7 +4,7 @@ import { SUMMARY_SYSTEM_PROMPT, buildSummaryInput } from "./summary-prompt";
 describe("summary-prompt", () => {
   it("промпт один і не залежить від вчителя чи профілю", () => {
     expect(typeof SUMMARY_SYSTEM_PROMPT).toBe("string");
-    // buildSummaryInput приймає лише записи чату: вчитель і профіль не можуть потрапити всередину
+    // buildSummaryInput accepts only chat entries: the teacher and profile cannot get inside
     expect(buildSummaryInput.length).toBe(1);
   });
 

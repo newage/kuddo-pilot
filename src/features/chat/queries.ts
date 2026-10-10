@@ -11,7 +11,7 @@ export async function listChats(db: Db, userId: string) {
     .orderBy(desc(chats.createdAt));
 }
 
-// Лише власний і не прихований чат; інакше null.
+// Only an owned, non-hidden chat; otherwise null.
 export async function getChatWithEntries(db: Db, userId: string, chatId: string) {
   const [chat] = await db
     .select({ id: chats.id, title: chats.title, teacherName: teachers.name })
@@ -27,7 +27,7 @@ export async function getChatWithEntries(db: Db, userId: string, chatId: string)
   return { chat, entries };
 }
 
-// Soft delete: лише виставляє deleted_at, записи лишаються в БД.
+// Soft delete: only sets deleted_at; entries stay in the DB.
 export async function hideChat(db: Db, userId: string, chatId: string) {
   const rows = await db
     .update(chats)

@@ -20,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       await ensureUser(db, { email: user.email, name: user.name }, env().ADMIN_EMAIL);
       return true;
     },
-    // Роль береться з БД на кожному запиті, тож зміна admin-ом діє без повторного входу.
+    // The role is read from the DB on every request, so a change by an admin takes effect without signing in again.
     async jwt({ token }) {
       if (token.email) {
         const user = await findUserByEmail(db, token.email);

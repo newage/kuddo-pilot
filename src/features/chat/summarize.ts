@@ -8,9 +8,9 @@ export const FOLD_THRESHOLD = 10;
 
 type Generate = (input: { system: string; prompt: string }) => Promise<string>;
 
-// Згортає записи чату в один кумулятивний підсумок, коли їх ≥ 10.
-// Транзакція з блокуванням рядка чату: паралельний виклик чекає й бачить уже згорнутий чат.
-// Збій не кидається: записи лишаються, наступне повідомлення повторить спробу.
+// Folds chat entries into one cumulative summary once there are ≥ 10.
+// Transaction with a chat row lock: a parallel call waits and sees the already folded chat.
+// A failure is not thrown: entries remain, the next message retries.
 export async function foldChatIfNeeded(
   db: Db,
   chatId: string,
@@ -42,7 +42,7 @@ export async function foldChatIfNeeded(
         chatId,
         role: "summary",
         content: summary,
-        // на 1 мс раніше за найстарший запис: підсумок завжди першим навіть при збігу часу
+        // 1 ms earlier than the oldest entry: the summary is always first even on equal timestamps
         createdAt: new Date(entries[0].createdAt.getTime() - 1),
       });
       return { folded: true };

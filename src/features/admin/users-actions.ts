@@ -7,7 +7,7 @@ import { users } from "@/db/schema";
 import { requireAdmin } from "@/features/auth/session";
 import { getMessages } from "@/i18n/server";
 
-// Server action викликається напряму, тож admin перевіряється тут, а не лише в layout.
+// A server action is called directly, so admin is checked here, not only in the layout.
 export async function setUserRole(formData: FormData) {
   const admin = await requireAdmin();
   const userId = String(formData.get("userId") ?? "");

@@ -5,8 +5,8 @@ import * as schema from "./schema";
 
 const TEST_DB = "kuddo_test";
 
-// Тести працюють із реальним Postgres (блокування й транзакції не емулюються)
-// в окремій БД поруч із робочою; потрібен DATABASE_URL із Docker.
+// Tests run against a real Postgres (locks and transactions are not emulated)
+// in a separate DB next to the working one; needs DATABASE_URL from Docker.
 export async function createTestDb() {
   const base = new URL(process.env.DATABASE_URL ?? "");
   const admin = new Pool({ connectionString: base.toString() });

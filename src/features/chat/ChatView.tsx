@@ -10,11 +10,11 @@ import type { Locale } from "@/i18n/locales";
 import type { Messages } from "@/i18n/messages";
 
 type Props = {
-  // для нового чату id генерується тут, один раз
+  // for a new chat the id is generated here, once
   chatId?: string;
   title: string;
   initialMessages: UIMessage[];
-  // лише для нового чату: вчитель фіксується при створенні
+  // new chat only: the teacher is fixed at creation
   newChatTeacherId?: string;
   locale: Locale;
   labels: Messages["chat"]["view"];

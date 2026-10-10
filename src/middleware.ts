@@ -3,7 +3,7 @@ import { authConfig } from "@/features/auth/auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-// Лише автентифікація (edge, без БД). Роль перевіряється на сервері в requireUser/requireAdmin.
+// Authentication only (edge, no DB). The role is checked on the server in requireUser/requireAdmin.
 export default auth;
 
 export const config = {

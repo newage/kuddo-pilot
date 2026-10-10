@@ -2,7 +2,7 @@ import { and, eq } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { roleTeachers, teachers, type Role } from "@/db/schema";
 
-// Доступ ролі до активного вчителя: перевіряється на кожен запит до чату.
+// Role access to an active teacher: checked on every chat request.
 export async function getAccessibleTeacher(db: Db, role: Role, teacherId: string) {
   const [row] = await db
     .select({ teacher: teachers })

@@ -20,7 +20,7 @@ function profileBlock(p: ContextProfile | null): string {
   return lines.length ? `\n\nПрофіль дитини:\n${lines.join("\n")}` : "";
 }
 
-// Контекст запиту: актуальний промпт вчителя + профіль (лише тут, не в БД) і записи чату, підсумок першим.
+// Request context: the current teacher prompt + profile (only here, not in the DB) and chat entries, summary first.
 export function buildContext(input: {
   teacherPrompt: string;
   profile: ContextProfile | null;
@@ -37,7 +37,7 @@ export function buildContext(input: {
     if (last && last.role === turn.role) last.text += `\n\n${turn.text}`;
     else turns.push(turn);
   }
-  // інструкція мови йде останньою: промпт вчителя може бути іншою мовою
+  // the language instruction goes last: the teacher prompt may be in another language
   const system = `${input.teacherPrompt}${profileBlock(input.profile)}\n\n${LANGUAGE_INSTRUCTION[input.locale]}`;
   return { system, turns };
 }

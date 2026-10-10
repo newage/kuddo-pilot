@@ -123,7 +123,7 @@ describe("вчителі й доступи", () => {
     expect(await listAccessibleTeachers(db, "user")).toHaveLength(0);
 
     await grantAccess(form({ role: "user", teacherId: teacher.id }));
-    await grantAccess(form({ role: "user", teacherId: teacher.id })); // ідемпотентно
+    await grantAccess(form({ role: "user", teacherId: teacher.id })); // idempotent
     expect(await listAccessibleTeachers(db, "user")).toHaveLength(1);
     expect(await db.select().from(roleTeachers)).toHaveLength(1);
 

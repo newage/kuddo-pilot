@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { users } from "@/db/schema";
 
-// Створює користувача при першому вході (без ролі); email з ADMIN_EMAIL отримує admin.
+// Creates the user on first sign-in (no role); the ADMIN_EMAIL email gets admin.
 export async function ensureUser(
   db: Db,
   profile: { email: string; name?: string | null },

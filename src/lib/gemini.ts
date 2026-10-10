@@ -9,7 +9,7 @@ function ai() {
   return client;
 }
 
-// Логи лише в development: промпти містять дані дитини. Ключ не логується.
+// Logs in development only: prompts contain the child's data. The key is never logged.
 const logging = () => process.env.NODE_ENV === "development";
 
 function logGemini(label: string, payload: unknown, error = false) {
@@ -22,7 +22,7 @@ function errorDetails(e: unknown) {
   return { code: err?.status ?? err?.code, message: err?.message ?? String(e) };
 }
 
-// Єдиний вхід до Gemini: id моделі лише з GEMINI_MODEL.
+// The single entry point to Gemini: the model id comes only from GEMINI_MODEL.
 export async function* streamGemini(input: {
   system: string;
   turns: GeminiTurn[];

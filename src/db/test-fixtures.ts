@@ -17,7 +17,7 @@ export async function seedChat(db: Db, opts: { role?: "admin" | "user" | null; e
   return { user, teacher, chat };
 }
 
-// Додає n записів чату з наростаючим часом, чергуючи user/assistant.
+// Adds n chat entries with increasing timestamps, alternating user/assistant.
 export async function addEntries(db: Db, chatId: string, n: number, startAt = 0) {
   const base = Date.parse("2026-01-01T00:00:00Z");
   for (let i = startAt; i < startAt + n; i++) {
